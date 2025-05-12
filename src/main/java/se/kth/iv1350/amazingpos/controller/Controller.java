@@ -64,7 +64,13 @@ public class Controller {
         }
 
         SaleDTO currentSale = sale.registerItem(itemIdentifier, quantity);
-        currentSale.checkItemValidity(); //should throw an exception if invalid!
+        try{
+            currentSale.checkItemValidity(); //should throw an exception if invalid!
+        }
+        catch(){
+            System.out.println("Item Invalid");
+        }
+
         return currentSale;  
     }
 
