@@ -16,9 +16,13 @@ public class ExternalInventorySystem {
      * @param itemIdentifier The item identifier.
      * @return The item that was looked up.
      */
-    public ItemDTO lookupItem(int itemIdentifier){
+    public ItemDTO lookupItem(int itemIdentifier) throws DataBaseException {
         ItemDTO item;
         // sends a request to the external database that either doesnt return anything usefull or returns the data so we can create a ItemDTO
+        if(itemIdentifier == 1000){
+            throw new DataBaseException("Can not connect to the database!");   
+        }
+
         ItemDTO placeholderDTO = PlaceholderDatabase.findItemPlaceholderDatabase(itemIdentifier);
         if(placeholderDTO == null){
             item = null;

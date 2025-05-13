@@ -6,6 +6,7 @@ import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
 import se.kth.iv1350.amazingpos.model.InvalidItemException;
+import se.kth.iv1350.amazingpos.logapi.*;
 
 
 /**
@@ -13,11 +14,17 @@ import se.kth.iv1350.amazingpos.model.InvalidItemException;
  * 
  */
 public class Controller {
+    private FileLogger logger;
+     
     private Sale sale;
     private RegistryCreator externalSystems;
     private Printer printer;
 
     public static final int MAX_ALLOWED_QUANTITY = 1000;
+
+
+
+    
 
     /**
      * Creates an instance of controller.
@@ -27,6 +34,7 @@ public class Controller {
     public Controller(RegistryCreator creator, Printer printer){
        this.externalSystems = creator;
        this.printer = printer;  
+       
     }
 
     /**
@@ -47,6 +55,7 @@ public class Controller {
      */
     public void startSale(){    
         this.sale = new Sale(externalSystems, printer);
+        logger = new FileLogger();
     }
 
     /**
@@ -68,8 +77,10 @@ public class Controller {
         try{
             currentSale.checkItemValidity(); //should throw an exception if invalid!
         }
-        catch(InvalidItemException e){
-            throw e;
+        catch(InvalidItemException error){
+            logger.log(error.getMessage());
+            throw error;
+            
         }
 
         return currentSale;  
