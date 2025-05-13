@@ -39,10 +39,10 @@ public class SaleDTO {
     /**
      * Checks if the item is valid or not.
      */
-    public void checkItemValidity(){
+    public void checkItemValidity()throws InvalidItemException{
         if(lastRegisteredItem == null){
-            //should throw an exception here!
-            System.out.println("Item invalid");
+            throw new InvalidItemException("itemNotValid");
+           
         }
     }
 

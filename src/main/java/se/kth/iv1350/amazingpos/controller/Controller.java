@@ -67,7 +67,7 @@ public class Controller {
         try{
             currentSale.checkItemValidity(); //should throw an exception if invalid!
         }
-        catch(){
+        catch(InvalidItemException){
             System.out.println("Item Invalid");
         }
 
