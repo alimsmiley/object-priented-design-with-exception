@@ -60,31 +60,32 @@ public class ControllerTest {
  
     @Test
     void testAddItemInvalidMaxQuantity() {
-        String message = ""; 
-        try {
-            SaleDTO current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
-        } catch (InvalidItemException quantityError){
-            message = quantityError.getMessage();
-        }
+        SaleDTO current = null;
+        try{
+            current = controller.addItem(validItemIdentifier,quantity);
+            current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
+        }catch(InvalidItemException error){
 
-        String expectedResult = "The quantity is unreasonable!";
+        } 
+        int expected = 2;
+        int result = current.getListOfRegisteredItem().getShoppingList().get(0).getQuantity();
+        assertEquals(result, expected, "Invalid item has been added.");
         
-        assertEquals(message, expectedResult, "Exception Message Is incorrect");    
+    
     }
 
-    
-
-    
     @Test
     void testAddItemInvalidNegativeQuantity() {
-        String message = "";
-        try {
-           SaleDTO current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
-        } catch (InvalidItemException quantityError){
-            message = quantityError.getMessage();
-        }
-        String expectedResult = "The quantity is unreasonable!";
-        assertEquals(message, expectedResult,"Exception Message Is incorrect");    
+        SaleDTO current = null;
+        try{
+            current = controller.addItem(validItemIdentifier,quantity);
+            current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
+        }catch(InvalidItemException error){
+
+        } 
+        int expected = 2;
+        int result = current.getListOfRegisteredItem().getShoppingList().get(0).getQuantity();
+        assertEquals(result, expected, "Invalid item has been added.");   
     }
 
  
@@ -182,7 +183,40 @@ public class ControllerTest {
         assertEquals(expected, result, "Change amount doesnt match!");
 
     }
+    @Test
+    void testInvalidItemExceptionForInvalidMaxQuantity() {
+        String message = ""; 
+        try {
+            SaleDTO current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
+        } catch (InvalidItemException quantityError){
+            message = quantityError.getMessage();
+        }
 
+        String expectedResult = "The quantity is unreasonable!";
+        
+        assertEquals(message, expectedResult, "Exception Message Is incorrect");    
+    }
 
-
+    @Test
+    void testInvalidItemExceptionForInvalidNegativeQuantity() {
+        String message = "";
+        try {
+           SaleDTO current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
+        } catch (InvalidItemException quantityError){
+            message = quantityError.getMessage();
+        }
+        String expectedResult = "The quantity is unreasonable!";
+        assertEquals(message, expectedResult,"Exception Message Is incorrect");    
+    }
+    @Test
+    void testInvalidItemExceptionForInvalidItemIdentifier() {
+        String message = "";
+        try {
+           SaleDTO current = controller.addItem(inValidItemIdentifier, quantity);
+        } catch (InvalidItemException quantityError){
+            message = quantityError.getMessage();
+        }
+        String expectedResult = "itemNotValid";
+        assertEquals(message, expectedResult,"Exception Message Is incorrect");    
+    }
 }
