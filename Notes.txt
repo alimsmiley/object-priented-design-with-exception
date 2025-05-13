@@ -10,3 +10,6 @@ Kvar att göra:
 1. Payment klassen
     - Payment constructor som tar emot PaidAmount
     - calculateTotalAmount
+
+ooooooooooooooooooooooooooooooooo Datum: 13/5 ooooooooooooooooooooooooooooooooooooooooooooo
+1. Fixa tester för exceptions i externa databasen
