@@ -65,12 +65,11 @@ public class ControllerTest {
             SaleDTO current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
         } catch (InvalidItemException quantityError){
             message = quantityError.getMessage();
-
         }
 
         String expectedResult = "The quantity is unreasonable!";
         
-        assertEquals(message, expectedResult, "invalid item quantity!");    
+        assertEquals(message, expectedResult, "Exception Message Is incorrect");    
     }
 
     
@@ -78,21 +77,38 @@ public class ControllerTest {
     
     @Test
     void testAddItemInvalidNegativeQuantity() {
-        SaleDTO current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
-        assertTrue(current == null, "invalid item quantity!");    
+        String message = "";
+        try {
+           SaleDTO current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
+        } catch (InvalidItemException quantityError){
+            message = quantityError.getMessage();
+        }
+        String expectedResult = "The quantity is unreasonable!";
+        assertEquals(message, expectedResult,"Exception Message Is incorrect");    
     }
 
  
     @Test
     void testIfAddItemReturnsSaleDTO(){
-        SaleDTO current = controller.addItem(validItemIdentifier, quantity);
+        SaleDTO current = null;
+        try{
+            current = controller.addItem(validItemIdentifier, quantity);
+        }catch (InvalidItemException error){
+
+        }
         assertTrue(current instanceof SaleDTO);
     }
 
     @Test
-    void testAddItemIfAddedInvalidItemIsNullInLastRegisteredItem(){
-        SaleDTO current = controller.addItem(inValidItemIdentifier, quantity);
-        assertTrue(current.getLastRegisteredItem() == null, "invalid Item failed to return null! ");
+    void testAddInvalidItemIsNotAdded(){
+        SaleDTO current = null;
+        try{
+            current = controller.addItem(validItemIdentifier,quantity);
+            current = controller.addItem(inValidItemIdentifier, quantity);
+        }catch(InvalidItemException error){
+
+        } 
+        assertTrue(current.getLastRegisteredItem() != null, "Invalid item has been added.");
     }
 
     @Test
