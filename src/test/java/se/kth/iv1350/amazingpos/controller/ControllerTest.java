@@ -121,7 +121,13 @@ public class ControllerTest {
 
     @Test
     void testConcludeSaleWithBoughtItems(){
-        controller.addItem(validItemIdentifier, quantity);
+        SaleDTO current = null;
+        try{
+            current = controller.addItem(validItemIdentifier,quantity);
+            current = controller.addItem(inValidItemIdentifier, quantity);
+        }catch(InvalidItemException error){
+
+        } 
 
         double result = controller.concludeSale();
         double expected = 345;
@@ -143,10 +149,14 @@ public class ControllerTest {
 
     @Test
     void testPayReturnsZeroChange(){
-        controller.addItem(validItemIdentifier1, quantityX);
-        controller.addItem(validItemIdentifier2, quantityX*2); 
-        controller.addItem(validItemIdentifier3, quantityX*3); 
-        controller.concludeSale();
+        try{
+            controller.addItem(validItemIdentifier1, quantityX);
+            controller.addItem(validItemIdentifier2, quantityX*2); 
+            controller.addItem(validItemIdentifier3, quantityX*3); 
+            controller.concludeSale();
+        }catch(InvalidItemException error){
+
+        }
 
         double result = controller.pay(paidAmountExact);
         double expected = 0;
@@ -157,10 +167,14 @@ public class ControllerTest {
 
     @Test
     void testPayReturnsRightChangeAmount(){
-        controller.addItem(validItemIdentifier1, quantityX);
-        controller.addItem(validItemIdentifier2, quantityX*2); 
-        controller.addItem(validItemIdentifier3, quantityX*3); 
-        controller.concludeSale();
+        try{
+            controller.addItem(validItemIdentifier1, quantityX);
+            controller.addItem(validItemIdentifier2, quantityX*2); 
+            controller.addItem(validItemIdentifier3, quantityX*3); 
+            controller.concludeSale();
+        }catch(InvalidItemException error){
+            
+        }
 
         double result = controller.pay(paidAmountMore);
         double expected = 385;
