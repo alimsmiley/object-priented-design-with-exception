@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import se.kth.iv1350.amazingpos.logapi.*;
 
 import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
-import se.kth.iv1350.amazingpos.model.Payment;
-import se.kth.iv1350.amazingpos.model.Sale;
-import se.kth.iv1350.amazingpos.model.SaleDTO;
+import se.kth.iv1350.amazingpos.model.*; 
+
 
 public class ControllerTest {
     static  Sale currentSale;
@@ -60,9 +60,22 @@ public class ControllerTest {
  
     @Test
     void testAddItemInvalidMaxQuantity() {
-        SaleDTO current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
-        assertTrue(current == null, "invalid item quantity!");    
+        String message = ""; 
+        try {
+            SaleDTO current = controller.addItem(validItemIdentifier, invalidMaxQuantity);
+        } catch (InvalidItemException quantityError){
+            message = quantityError.getMessage();
+
+        }
+
+        String expectedResult = "The quantity is unreasonable!";
+        
+        assertEquals(message, expectedResult, "invalid item quantity!");    
     }
+
+    
+
+    
     @Test
     void testAddItemInvalidNegativeQuantity() {
         SaleDTO current = controller.addItem(validItemIdentifier, invalidNegativeQuantity);
