@@ -40,26 +40,27 @@ public class View {
         System.out.println("");
 
         SaleDTO currentSale;
+        try {
+            for(int i = 1; i <= 4; i++){
+                currentSale =  contr.addItem(i, quantity);
+                ItemDTO currentItem =  currentSale.getLastRegisteredItem();
+                System.out.println("Item ID: " + i);
+                System.out.println("Item name: " + currentItem.getName()); 
+                System.out.println("Item cost: " + currentItem.getPrice() + " SEK"); 
+                System.out.println("VAT : " + currentItem.getVatRate()*100 + "%"); 
+                System.out.println("Item description: " + currentItem.getItemDescription());
+                System.out.println(""); 
+                System.out.println("Running total: " + currentSale.getRunningTotal() + " SEK");
+                System.out.println("Total VAT: " + currentSale.getTotalVat() + " SEK"); 
 
-        for(int i = 1; i <= 3; i++){
-            currentSale =  contr.addItem(i, quantity);
-            ItemDTO currentItem =  currentSale.getLastRegisteredItem();
-            System.out.println("Item ID: " + i);
-            System.out.println("Item name: " + currentItem.getName()); 
-            System.out.println("Item cost: " + currentItem.getPrice() + " SEK"); 
-            System.out.println("VAT : " + currentItem.getVatRate()*100 + "%"); 
-            System.out.println("Item description: " + currentItem.getItemDescription());
-            System.out.println(""); 
-            System.out.println("Running total: " + currentSale.getRunningTotal() + " SEK");
-            System.out.println("Total VAT: " + currentSale.getTotalVat() + " SEK"); 
-
-            System.out.println(""); 
-            System.out.println(""); 
+                System.out.println(""); 
+                System.out.println(""); 
+            }
+        } catch (InvalidItemException invalidItem) {
+            System.out.println(invalidItem.getMessage()); 
 
         }
-        
-        currentSale = contr.addItem(27, 2);
-        
+                
 
         System.out.println(""); System.out.println("");System.out.println("");
          
@@ -78,7 +79,7 @@ public class View {
 
 
 
-
+ 
 
         
 

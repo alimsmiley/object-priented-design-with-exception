@@ -5,6 +5,7 @@ import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
+import se.kth.iv1350.amazingpos.model.InvalidItemException;
 
 
 /**
@@ -55,7 +56,7 @@ public class Controller {
      * @param quantity  The quantity of the item that are to be added.
      * @return The current sale dto.
      */
-    public SaleDTO addItem(int itemIdentifier, int quantity){
+    public SaleDTO addItem(int itemIdentifier, int quantity)throws InvalidItemException {
         
         if(!isQuantityReasonable(quantity)){
             //should throw an exception 
@@ -67,8 +68,8 @@ public class Controller {
         try{
             currentSale.checkItemValidity(); //should throw an exception if invalid!
         }
-        catch(InvalidItemException){
-            System.out.println("Item Invalid");
+        catch(InvalidItemException e){
+            throw e;
         }
 
         return currentSale;  
