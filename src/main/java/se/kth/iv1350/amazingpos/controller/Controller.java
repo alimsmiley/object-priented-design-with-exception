@@ -42,11 +42,11 @@ public class Controller {
      * @param quantity The given quantity of items.
      * @return  If resonable or not.
      */
-    public boolean isQuantityReasonable(int quantity){
+    private void isQuantityReasonable(int quantity) throws InvalidItemException {
         if(quantity > MAX_ALLOWED_QUANTITY || quantity < 0){
-            return false;
+            throw new InvalidItemException("The quantity is unreasonable!");
         }
-        return true;
+        
     }
 
     /**
@@ -66,12 +66,14 @@ public class Controller {
      * @return The current sale dto.
      */
     public SaleDTO addItem(int itemIdentifier, int quantity)throws InvalidItemException {
-        
-        if(!isQuantityReasonable(quantity)){
-            //should throw an exception 
-            System.out.println("Invalid item quantity!");
-            return null;           
+        try {
+            isQuantityReasonable(quantity);
+        } catch (InvalidItemException invalidQuantity){
+            logger.log(invalidQuantity.getMessage());
+            throw invalidQuantity;
         }
+
+
 
         SaleDTO currentSale = sale.registerItem(itemIdentifier, quantity);
         try{
@@ -79,8 +81,7 @@ public class Controller {
         }
         catch(InvalidItemException error){
             logger.log(error.getMessage());
-            throw error;
-            
+            throw error;         
         }
 
         return currentSale;  
