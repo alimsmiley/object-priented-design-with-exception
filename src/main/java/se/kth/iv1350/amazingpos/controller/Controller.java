@@ -9,6 +9,7 @@ import se.kth.iv1350.amazingpos.model.Observer;
 import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
+import se.kth.iv1350.amazingpos.view.TotalRevenueFileOutput;
  
 
 
@@ -53,8 +54,9 @@ public class Controller {
         }
         
     }
-
-    Observer observer = new Observer();
+    //?? kolla 
+    Observer saleObserver = new TotalRevenueFileOutput();
+    
     /**
      * Starts a new sale
      * This method should be called first before doing anything else 
@@ -63,7 +65,7 @@ public class Controller {
         this.sale = new Sale(externalSystems, printer);
         logger = new FileLogger();
         
-        sale.addObserver(observer);
+        sale.addObserver(saleObserver);
     }
 
     /**

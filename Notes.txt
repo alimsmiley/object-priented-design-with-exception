@@ -19,3 +19,6 @@ som kastar exceptions (se listing 8.17)
 @throws CarRegistryException if the data base call failed, or if the specified car did not exist.
 
 3. Never write an empty catch block (se sida 185), controller test
+
+
+
