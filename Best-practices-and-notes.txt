@@ -1,0 +1,160 @@
+Best Practice
+In well-structured MVC applications:
+    *Controllers typically catch exceptions from the service or integration layers.
+    *They translate them into user-friendly error messages or error views, so that raw exceptions don't reach the View.
+=========================== Exception propagating up====================================
+
+In the MVC (Model-View-Controller) design pattern in Java 
+(or generally), if an exception is thrown in a lower layer (e.g., Integration or Model),
+and it is not caught in the layers in between (like Controller), then it will propagate
+up the call stack all the way to the View, unless a layer catches it.
+
+===============================Throw or Throw New=====================================================
+The difference between `throw` and `throw new` inside a `catch` block is crucial in Java and depends on **what you want to do with the exception**.
+
+---
+
+### 🔁 `throw;` — Re-throw the **same exception**
+
+Actually, **Java does not allow just `throw;`** like C# does. In Java, you must **specify the exception object** to throw. So this would be:
+
+```java
+catch (IOException e) {
+    throw e;  // Re-throws the same exception
+}
+```
+
+This keeps the original stack trace and exception object exactly as it was. Use this when:
+
+* You want to let the exception bubble up unchanged.
+* You don’t want to lose the original context.
+
+---
+
+### 🆕 `throw new SomeException()` — Throw a **new exception**
+
+```java
+catch (IOException e) {
+    throw new RuntimeException("Failed to read file", e);
+}
+```
+
+Use this when:
+
+* You want to **wrap** the original exception into a higher-level one (common in layered architecture).
+* You want to **add context or a message** specific to the layer or business logic.
+* You’re converting a **checked exception to an unchecked one** (e.g., `IOException` to `RuntimeException`).
+
+This changes the stack trace, unless you **pass the original exception as the cause** (`new RuntimeException("msg", e)`), which is a good practice.
+
+---
+
+### ✅ Best Practices
+
+| Situation                                    | Use                                                     |
+| -------------------------------------------- | ------------------------------------------------------- |
+| Preserve exact original exception            | `throw e;`                                              |
+| Add context, wrap exception                  | `throw new MyException("Message", e);`                  |
+| Replace with a different exception           | `throw new OtherException(...);`                        |
+| Avoid losing cause (always use `e` as cause) | `throw new X("...", e);` not just `throw new X("...");` |
+
+---
+
+### 🚫 Don’t do this:
+
+```java
+catch (IOException e) {
+    throw new RuntimeException("Something went wrong"); // BAD: loses original cause
+}
+```
+
+You lose the original exception (`e`) and its stack trace, which makes debugging harder.
+
+---
+
+### Summary
+
+* Use `throw e;` when you want to re-throw the same exception.
+* Use `throw new` when you want to wrap or replace the exception — **but always include the original as the cause** if you want to keep the trace.
+======================================= Declaring an exception in the throws clause==================================================================
+
+
+whether a method should declare an exception in its `throws` clause depends entirely on whether the exception is *checked* or *unchecked***. Here's how it breaks down:
+
+---
+
+### ✅ 1. **Checked Exceptions**
+
+Checked exceptions are **subclasses of `Exception`** (but **not** `RuntimeException`).
+
+> **Examples:** `IOException`, `SQLException`, `ParseException`, etc.
+
+* **If your method can throw a checked exception** (whether it originates there or is just propagated), **you must declare it** in the method signature **or catch it.**
+
+```java
+// This method doesn't throw the IOException itself,
+// but it lets it propagate, so it must declare it.
+public void readFile(String path) throws IOException {
+    Files.readAllLines(Path.of(path));
+}
+```
+
+If you don’t declare it and don’t catch it — the code **won’t compile**.
+
+---
+
+### ⚠️ 2. **Unchecked Exceptions**
+
+Unchecked exceptions are **subclasses of `RuntimeException`**.
+
+> **Examples:** `NullPointerException`, `IllegalArgumentException`, `IndexOutOfBoundsException`, etc.
+
+* You **don’t need to declare** unchecked exceptions in the `throws` clause — even if your method throws or propagates them.
+
+```java
+public void doSomething(String input) {
+    if (input == null) {
+        throw new IllegalArgumentException("Input cannot be null");
+    }
+}
+```
+
+No `throws` clause is needed here.
+
+---
+
+### 🤔 What if you're **only passing through** a checked exception?
+
+Yes — even if the method doesn’t throw the exception itself but **calls another method that does**, and you **don’t catch** it, then **you must declare it**:
+
+```java
+public void processFile(String path) throws IOException {
+    readFile(path); // readFile throws IOException
+}
+```
+
+If you catch it:
+
+```java
+public void processFile(String path) {
+    try {
+        readFile(path);
+    } catch (IOException e) {
+        // handle or log
+    }
+}
+```
+
+Then no `throws IOException` needed.
+
+---
+### ✅ Summary Table
+
+| Exception Type                     | Needs `throws` Clause? | Can Be Caught? |
+| ---------------------------------- | ---------------------- | -------------- |
+| **Checked** (`Exception`)          | Yes (if not caught)    | Yes            |
+| **Unchecked** (`RuntimeException`) | No                     | Yes            |
+
+=================================================================================================
+
+
