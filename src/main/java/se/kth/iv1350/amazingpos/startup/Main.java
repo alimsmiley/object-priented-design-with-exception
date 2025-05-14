@@ -6,6 +6,7 @@ import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.view.View;
 
 
+
 /**
  * Starts the entire program. Contains main method required to start the application.
  * 
@@ -20,7 +21,8 @@ public class Main {
     public static void main(String[] args){
      
         
-      
+       
+
         RegistryCreator registryCreator = new RegistryCreator();
         Printer printer = new Printer();
         
@@ -30,5 +32,7 @@ public class Main {
 
 
         view.runFakeExecution(); 
+
+
     }
 }

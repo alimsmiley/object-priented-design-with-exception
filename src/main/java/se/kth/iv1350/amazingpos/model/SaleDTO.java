@@ -38,6 +38,7 @@ public class SaleDTO {
     }
     /**
      * Checks if the item is valid or not.
+     * @throw InvalidItemException if the item identifier is invalid. 
      */
     public void checkItemValidity()throws InvalidItemException{
         if(lastRegisteredItem == null){

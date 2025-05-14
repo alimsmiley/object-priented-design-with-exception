@@ -5,10 +5,11 @@ import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.logapi.FileLogger;
 import se.kth.iv1350.amazingpos.model.InvalidItemException;
+import se.kth.iv1350.amazingpos.model.Observer;
 import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
-
+ 
 
 
 /**
@@ -24,7 +25,7 @@ public class Controller {
 
     public static final int MAX_ALLOWED_QUANTITY = 1000;
 
-
+    
 
     
 
@@ -43,6 +44,8 @@ public class Controller {
      * Checks to see if the {@link quantity} is a resonable amount.
      * @param quantity The given quantity of items.
      * @return  If resonable or not.
+     * 
+     * @throw InvalidItemException if the quantity is invalid.
      */
     private void isQuantityReasonable(int quantity) throws InvalidItemException {
         if(quantity > MAX_ALLOWED_QUANTITY || quantity < 0){
@@ -51,6 +54,7 @@ public class Controller {
         
     }
 
+    Observer observer = new Observer();
     /**
      * Starts a new sale
      * This method should be called first before doing anything else 
@@ -58,6 +62,8 @@ public class Controller {
     public void startSale(){    
         this.sale = new Sale(externalSystems, printer);
         logger = new FileLogger();
+        
+        sale.addObserver(observer);
     }
 
     /**
@@ -85,8 +91,6 @@ public class Controller {
             throw dataBaseError;
         }
         
-
-        
         try{
             currentSale.checkItemValidity(); //should throw an exception if invalid!
         }
@@ -94,7 +98,6 @@ public class Controller {
             logger.log(error.getMessage());
             throw error;         
         }
-
         return currentSale;  
     }
 

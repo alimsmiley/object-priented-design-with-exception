@@ -1,6 +1,8 @@
 package se.kth.iv1350.amazingpos.model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import se.kth.iv1350.amazingpos.integration.DataBaseException;
 import se.kth.iv1350.amazingpos.integration.Printer;
@@ -11,6 +13,7 @@ import se.kth.iv1350.amazingpos.integration.RegistryCreator;
  * One single sale made by one single customer and paid with one payment. 
  */
 public class Sale {
+    private List<Observer> observers = new ArrayList<>();
     private ShoppingList shoppingCart;
     private double runningTotal;
     private LocalTime saleTime;
@@ -21,7 +24,10 @@ public class Sale {
     private Printer printer;
     private Payment payment;
     
-    
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+
             
     /**
      * Creates a new instance of sale with {@link exSystems} and {@link printer}.
@@ -44,6 +50,7 @@ public class Sale {
      * @param itemIdentifier The identifier for each item represented as an integer.
      * @param quantity Number of Items to be registered.
      * @return An object  containing all indormation about an item.
+     * @throw  DataBaseException if can not connect to the Database.
      */
     public SaleDTO registerItem(int itemIdentifier, int quantity){
 
@@ -88,6 +95,7 @@ public class Sale {
      */
     public double endSale(){
         this.finalAmount = runningTotal;
+        notifyObservers();
         return finalAmount;
     }
     /**
@@ -107,8 +115,8 @@ public class Sale {
         externalSystems.getExternalInventorySystem().updateExternalInventorySystem(paidSale); 
         
         return payment.getChange();
-
     }
+
     /**
      * Prints the receipt to prove the sale.
      */
@@ -175,6 +183,14 @@ public class Sale {
         vat += vatToPayForItem;
         return vatToPayForItem;
     }
+
+
+    private void notifyObservers(){
+        for(Observer observer: observers){ 
+            observer.addToTotalRevenue(this.finalAmount);
+        }
+    }
+    
 
     public ShoppingList getShoppingCart(){
         return shoppingCart;

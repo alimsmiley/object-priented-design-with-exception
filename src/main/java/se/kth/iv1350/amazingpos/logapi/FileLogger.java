@@ -1,5 +1,5 @@
 package se.kth.iv1350.amazingpos.logapi;
-import java.io.FileWriter; 
+import java.io.FileWriter;
 import java.io.IOException; 
 import java.io.PrintWriter;
 
@@ -20,6 +20,18 @@ public class FileLogger {
             ioe.printStackTrace();
         }
     }
+
+    public FileLogger(String logFile){
+        try {
+            logStream = new PrintWriter(new FileWriter(logFile), true);
+        } catch(IOException ioe) {
+            System.out.println("Can not log!");
+            ioe.printStackTrace();
+        }
+
+    }
+
+    
 
     /**
      * Prints the specified message to the log file.

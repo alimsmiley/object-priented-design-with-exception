@@ -14,6 +14,7 @@ public class ExternalInventorySystem {
      * Gets the item information from an external inventroy system given the {@link itemIdentifier} and returns the item found.
      * @param itemIdentifier The item identifier.
      * @return The item that was looked up.
+     * @throw DataBaseException if system can not connect to the database. 
      */
     public ItemDTO lookupItem(int itemIdentifier){
         ItemDTO item;
