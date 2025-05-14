@@ -4,4 +4,6 @@ public interface Observer {
     
     public void addToTotalRevenue(double amount);
 
+    
+
 }
