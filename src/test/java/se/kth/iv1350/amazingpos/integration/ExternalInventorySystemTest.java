@@ -1,11 +1,10 @@
 package se.kth.iv1350.amazingpos.integration;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +68,23 @@ public class ExternalInventorySystemTest {
         ItemDTO itemDTO = exInventory.lookupItem(2);
         int expectedResult = 2;
         assertEquals(itemDTO.getItemIdentifier(), expectedResult, "Valid itemidentifier not found!");
+    }
+    
+    @Test
+    void testDataBaseException(){
+
+        String message = "";
+        try {
+            ItemDTO itemDTO = exInventory.lookupItem(1000);
+        } catch (DataBaseException databaseError) {
+            message = databaseError.getMessage();
+        }
+
+        String expectedResult = "Can not connect to the database!";
+
+        assertEquals(message, expectedResult, "Exception message is incorrect");
+
+
     }
 
    

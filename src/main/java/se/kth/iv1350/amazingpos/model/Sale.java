@@ -2,7 +2,9 @@ package se.kth.iv1350.amazingpos.model;
 
 import java.time.LocalTime;
 
-import se.kth.iv1350.amazingpos.integration.*;
+import se.kth.iv1350.amazingpos.integration.DataBaseException;
+import se.kth.iv1350.amazingpos.integration.Printer;
+import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 
 
 /**
@@ -45,8 +47,13 @@ public class Sale {
      */
     public SaleDTO registerItem(int itemIdentifier, int quantity){
 
+        ItemDTO item;
+        try {
+            item = externalSystems.getExternalInventorySystem().lookupItem(itemIdentifier);
 
-        ItemDTO item = externalSystems.getExternalInventorySystem().lookupItem(itemIdentifier);
+        } catch (DataBaseException dataBaseError){
+            throw dataBaseError;
+        }
         
 
         if(item != null){

@@ -1,12 +1,14 @@
 
 package se.kth.iv1350.amazingpos.controller;
+import se.kth.iv1350.amazingpos.integration.DataBaseException;
 import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
+import se.kth.iv1350.amazingpos.logapi.FileLogger;
+import se.kth.iv1350.amazingpos.model.InvalidItemException;
 import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
-import se.kth.iv1350.amazingpos.model.InvalidItemException;
-import se.kth.iv1350.amazingpos.logapi.*;
+
 
 
 /**
@@ -64,6 +66,8 @@ public class Controller {
      * @param itemIdentifier The number that corresponds to the item added.
      * @param quantity  The quantity of the item that are to be added.
      * @return The current sale dto.
+     * @throws InvalidItemException if the item identifier or quantity entered is invalid
+     * @throws DataBaseException if the program can not connect to the database 
      */
     public SaleDTO addItem(int itemIdentifier, int quantity)throws InvalidItemException {
         try {
@@ -73,9 +77,16 @@ public class Controller {
             throw invalidQuantity;
         }
 
+        SaleDTO currentSale;
+        try {
+            currentSale = sale.registerItem(itemIdentifier, quantity);
+        } catch (DataBaseException dataBaseError){
+            logger.log(dataBaseError.getMessage());
+            throw dataBaseError;
+        }
+        
 
-
-        SaleDTO currentSale = sale.registerItem(itemIdentifier, quantity);
+        
         try{
             currentSale.checkItemValidity(); //should throw an exception if invalid!
         }

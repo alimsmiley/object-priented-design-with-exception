@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.kth.iv1350.amazingpos.logapi.*;
 
 import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
-import se.kth.iv1350.amazingpos.model.*; 
+import se.kth.iv1350.amazingpos.model.InvalidItemException; 
+import se.kth.iv1350.amazingpos.model.Sale;
+import se.kth.iv1350.amazingpos.model.SaleDTO;
 
 
 public class ControllerTest {
@@ -36,14 +37,11 @@ public class ControllerTest {
    
 
     @BeforeEach
-    void setUpClass(){
-        
+    void setUpClass(){    
         printer = new Printer();
         externalSystems = new RegistryCreator();
         controller = new Controller(externalSystems, printer);
         controller.startSale();
-
-    
     }
 
     @AfterEach
@@ -95,7 +93,7 @@ public class ControllerTest {
         try{
             current = controller.addItem(validItemIdentifier, quantity);
         }catch (InvalidItemException error){
-
+            
         }
         assertTrue(current instanceof SaleDTO);
     }

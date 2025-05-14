@@ -2,7 +2,11 @@
 package se.kth.iv1350.amazingpos.view;
 
 import se.kth.iv1350.amazingpos.controller.Controller;
-import se.kth.iv1350.amazingpos.model.*;
+import se.kth.iv1350.amazingpos.integration.DataBaseException;
+import se.kth.iv1350.amazingpos.model.InvalidItemException;
+import se.kth.iv1350.amazingpos.model.ItemDTO;
+import se.kth.iv1350.amazingpos.model.SaleDTO;
+
 
 /**
  * This is a placeholder for the real view 
@@ -56,9 +60,8 @@ public class View {
                 System.out.println(""); 
                 System.out.println(""); 
             }
-        } catch (InvalidItemException invalidItem) {
-            System.out.println(invalidItem.getMessage()); 
-
+        } catch (InvalidItemException | DataBaseException error) {
+            System.out.println(error.getMessage()); 
         }
                 
 

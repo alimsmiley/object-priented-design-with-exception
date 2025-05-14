@@ -3,25 +3,22 @@ package se.kth.iv1350.amazingpos.integration;
 import se.kth.iv1350.amazingpos.model.ItemDTO;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
 import se.kth.iv1350.amazingpos.placeholders.PlaceholderDatabase;
-import se.kth.iv1350.amazingpos.logapi.*;
 
 /**
  *
  * Includes a database of information about all items
  */
 public class ExternalInventorySystem {
-    FileLogger logger = new FileLogger();
     
     /**
      * Gets the item information from an external inventroy system given the {@link itemIdentifier} and returns the item found.
      * @param itemIdentifier The item identifier.
      * @return The item that was looked up.
      */
-    public ItemDTO lookupItem(int itemIdentifier) throws DataBaseException {
+    public ItemDTO lookupItem(int itemIdentifier){
         ItemDTO item;
         // sends a request to the external database that either doesnt return anything usefull or returns the data so we can create a ItemDTO
         if(itemIdentifier == 1000){
-            logger.log("Can not connect to the database!");
             throw new DataBaseException("Can not connect to the database!"); 
 
         }
