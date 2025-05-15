@@ -80,6 +80,10 @@ public class Controller {
             logger.log(invalidQuantity.getMessage());
             throw invalidQuantity;
         }
+        catch(Exception javaException){
+            System.out.println("Couldn't register item, please try again");
+            logger.log(javaException.getMessage());
+        }
 
         SaleDTO currentSale;
         try {
@@ -90,12 +94,17 @@ public class Controller {
         }
         
         try{
-            currentSale.checkItemValidity(); //should throw an exception if invalid!
+            currentSale.checkItemValidity(); 
         }
         catch(InvalidItemException error){
             logger.log(error.getMessage());
             throw error;         
         }
+        catch(Exception javaException){
+            System.out.println("Couldn't register item, please try again");
+            logger.log(javaException.getMessage());
+        }
+
         return currentSale;  
     }
 

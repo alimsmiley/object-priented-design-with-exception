@@ -57,6 +57,7 @@ public class Sale {
         } catch (DataBaseException dataBaseError){
             throw dataBaseError;
         }
+    
         
 
         if(item != null){

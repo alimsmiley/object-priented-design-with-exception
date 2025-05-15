@@ -80,14 +80,5 @@ public class View {
 
         System.out.println("Change to give customer: " +  change);
         
-
-
-
-
- 
-
-        
-
-
     }
 }
