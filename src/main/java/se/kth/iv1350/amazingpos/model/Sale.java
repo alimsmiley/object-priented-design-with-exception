@@ -24,10 +24,6 @@ public class Sale {
     private Printer printer;
     private Payment payment;
     
-    public void addObserver(SaleObserver observer){
-        observers.add(observer);
-    }
-
             
     /**
      * Creates a new instance of sale with {@link exSystems} and {@link printer}.
@@ -185,10 +181,17 @@ public class Sale {
         return vatToPayForItem;
     }
 
+    /**
+     * Adds observers to Sale
+     * @param observer the added observer
+     */
+    public void addObserver(List<SaleObserver> observers){
+        this.observers = observers;
+    }
 
     private void notifyObservers(Sale sale){
         for(SaleObserver observer: observers){ 
-            observer.addToTotalRevenue(sale);
+            observer.notifyObserver(sale);
         }
     }
     

@@ -19,7 +19,17 @@ public class TotalRevenueView implements SaleObserver {
         this.totalRevenue += amount;
         
         String revenue = Double.toString(totalRevenue);
-        System.out.println(revenue);  
+
+        System.out.println("");
+        System.out.println("#### This is not part of the receipt ####");
+        System.out.println("#### Will be viewed on it's own GUI ####");
+        System.out.println("####Total Revenue from todays sales####");
+        System.out.println("Total revenue would be: " + revenue);
+        System.out.println("###################################");
+        System.out.println("");
+      
+        System.out.println("--------------Beginning of receipt-------------------"); //Isn't part of addTotalRevenue
+                                                                                       //relocated from view to make output clean
 
     }
 

@@ -10,6 +10,7 @@ import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
 import se.kth.iv1350.amazingpos.view.TotalRevenueFileOutput;
+import java.util.*;
  
 
 
@@ -18,17 +19,14 @@ import se.kth.iv1350.amazingpos.view.TotalRevenueFileOutput;
  * 
  */
 public class Controller {
+    private List<SaleObserver> saleObservers = 
+                                new ArrayList<>();
     private FileLogger logger;
-     
     private Sale sale;
     private RegistryCreator externalSystems;
     private Printer printer;
 
     public static final int MAX_ALLOWED_QUANTITY = 1000;
-
-    
-
-    
 
     /**
      * Creates an instance of controller.
@@ -54,9 +52,7 @@ public class Controller {
         }
         
     }
-    //?? kolla 
-    SaleObserver saleObserver = new TotalRevenueFileOutput();
-    
+
     /**
      * Starts a new sale
      * This method should be called first before doing anything else 
@@ -64,8 +60,8 @@ public class Controller {
     public void startSale(){    
         this.sale = new Sale(externalSystems, printer);
         logger = new FileLogger();
-        
-        sale.addObserver(saleObserver);
+        this.sale.addObserver(saleObservers);
+       
     }
 
     /**
@@ -143,6 +139,14 @@ public class Controller {
        
         return change;
 
+    }
+
+    /**
+     * Adds an observer to Controller that will be sent to observed
+     * @param observer the added observer
+     */
+    public void addObserver(SaleObserver observer){
+        saleObservers.add(observer);
     }
 
     

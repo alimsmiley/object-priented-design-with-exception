@@ -32,6 +32,8 @@ public class View {
      */
     public View(Controller contr){
         this.contr = contr;
+        contr.addObserver(new TotalRevenueFileOutput());
+        contr.addObserver(new TotalRevenueView());
     }
     /**
      * Performs a fake sale, by calling all system operations in controller, as we do not have any real view implementation.
@@ -69,8 +71,8 @@ public class View {
          
         double amountToPay = contr.concludeSale();
         System.out.println("Amount to pay: " +  amountToPay);
-
-        System.out.println("--------------Beginning of receipt-------------------"); 
+       
+        
         double change = contr.pay(paidAmount);
         System.out.println("--------------End of receipt-------------------"); 
 
