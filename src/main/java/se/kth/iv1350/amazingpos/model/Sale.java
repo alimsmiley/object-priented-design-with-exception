@@ -13,7 +13,7 @@ import se.kth.iv1350.amazingpos.integration.RegistryCreator;
  * One single sale made by one single customer and paid with one payment. 
  */
 public class Sale {
-    private List<Observer> observers = new ArrayList<>();
+    private List<SaleObserver> observers = new ArrayList<>();
     private ShoppingList shoppingCart;
     private double runningTotal;
     private LocalTime saleTime;
@@ -24,7 +24,7 @@ public class Sale {
     private Printer printer;
     private Payment payment;
     
-    public void addObserver(Observer observer){
+    public void addObserver(SaleObserver observer){
         observers.add(observer);
     }
 
@@ -95,7 +95,7 @@ public class Sale {
      */
     public double endSale(){
         this.finalAmount = runningTotal;
-        notifyObservers();
+        
         return finalAmount;
     }
     /**
@@ -114,6 +114,7 @@ public class Sale {
         externalSystems.getExternalAccountingSystem().updateExternalAccountingSystem(paidSale); 
         externalSystems.getExternalInventorySystem().updateExternalInventorySystem(paidSale); 
         
+        notifyObservers(this);
         return payment.getChange();
     }
 
@@ -185,9 +186,9 @@ public class Sale {
     }
 
 
-    private void notifyObservers(){
-        for(Observer observer: observers){ 
-            observer.addToTotalRevenue(this.finalAmount);
+    private void notifyObservers(Sale sale){
+        for(SaleObserver observer: observers){ 
+            observer.addToTotalRevenue(sale);
         }
     }
     

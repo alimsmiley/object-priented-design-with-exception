@@ -1,13 +1,26 @@
 package se.kth.iv1350.amazingpos.view;
 
-import se.kth.iv1350.amazingpos.model.Observer;
+import se.kth.iv1350.amazingpos.model.Sale;
+import se.kth.iv1350.amazingpos.model.SaleObserver;
 
 
-public class TotalRevenueView implements Observer {
+public class TotalRevenueView implements SaleObserver { 
     private double totalRevenue;
 
-    public void addToTotalRevenue(double amount){
+    
+
+    @Override   
+    public void notifyObserver(Sale sale){
+        addToTotalRevenue(sale.getFinalAmount());
+    }
+
+   
+    private void addToTotalRevenue(double amount){  
         this.totalRevenue += amount;
+        
+        String revenue = Double.toString(totalRevenue);
+        System.out.println(revenue);  
+
     }
 
 }

@@ -5,7 +5,7 @@ import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.logapi.FileLogger;
 import se.kth.iv1350.amazingpos.model.InvalidItemException;
-import se.kth.iv1350.amazingpos.model.Observer;
+import se.kth.iv1350.amazingpos.model.SaleObserver;
 import se.kth.iv1350.amazingpos.model.Payment;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleDTO;
@@ -55,7 +55,7 @@ public class Controller {
         
     }
     //?? kolla 
-    Observer saleObserver = new TotalRevenueFileOutput();
+    SaleObserver saleObserver = new TotalRevenueFileOutput();
     
     /**
      * Starts a new sale
