@@ -2,6 +2,7 @@ package se.kth.iv1350.amazingpos.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ public class CashRegisterTest {
     private double paidAmountExact = 345;
     private Payment payment;
 
-
+    
     @BeforeEach
     void setUp(){
         exSystems = new RegistryCreator();
@@ -33,22 +34,22 @@ public class CashRegisterTest {
     }
 
     @AfterEach
-     public void tearDown() {
-        exSystems = null;
+    public void tearDown() {
         printer = null;
         testSale = null;
         payment = null;
-
-
-
     }
+
+
 
 
     @Test
     void testUpdateCashRegister() {
+        double preChangeBalance =  exSystems.getCashRegister().getBalance();
         exSystems.getCashRegister().updateCashRegister(payment);
-        double result = exSystems.getCashRegister().getBalance();
-        double expectedResult = 5345;
+        double result =  exSystems.getCashRegister().getBalance() - preChangeBalance;
+        
+        double expectedResult = 345;
 
         assertEquals(expectedResult, result, "Cash register is not correct");
     }

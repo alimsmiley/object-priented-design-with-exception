@@ -3,6 +3,7 @@ package se.kth.iv1350.amazingpos.model;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,11 +47,12 @@ public class SaleTest {
      
     @AfterEach
     void tearDown() {
-        exSystems = null;
+        exSystems = null; 
         printer = null;
         testSale = null;
 
     }
+
 
 
     @Test
