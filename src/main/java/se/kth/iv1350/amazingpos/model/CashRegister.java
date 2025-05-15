@@ -8,13 +8,9 @@ import se.kth.iv1350.amazingpos.integration.ExternalAccountingSystem;
  * 
  */
 public class CashRegister {
-    private double balance;
-    private static final CASH_REGISTER = new CashRegister(); 
-
-    public static CashRegister getCashRegister(){ 
-        return CASH_REGISTER;  
-    }
-
+    
+    private static final CashRegister CASH_REGISTER = new CashRegister(); 
+    private double balance = 0;
 
     /**
      * Creates a new instance of cash register.
@@ -23,6 +19,13 @@ public class CashRegister {
         this.balance = 5000;
 
     }
+
+    public static CashRegister getCashRegister(){ 
+        return CASH_REGISTER;  
+    }
+
+
+    
 
 
     
