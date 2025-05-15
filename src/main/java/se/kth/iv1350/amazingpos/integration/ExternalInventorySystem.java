@@ -9,7 +9,16 @@ import se.kth.iv1350.amazingpos.placeholders.PlaceholderDatabase;
  * Includes a database of information about all items
  */
 public class ExternalInventorySystem {
-    
+    private static final ExternalInventorySystem EXTERNAL_INVENTORY_SYSTEM = new ExternalInventorySystem();
+
+    public static ExternalInventorySystem getExternalInventorySystem(){
+        return EXTERNAL_INVENTORY_SYSTEM; 
+    }
+
+    private ExternalInventorySystem(){
+
+    } 
+
     /**
      * Gets the item information from an external inventroy system given the {@link itemIdentifier} and returns the item found.
      * @param itemIdentifier The item identifier.
@@ -44,6 +53,9 @@ public class ExternalInventorySystem {
     public void updateExternalInventorySystem(SaleDTO paidSale){
         
     } 
+
+
+
 }
 
 

@@ -19,9 +19,9 @@ public class RegistryCreator {
      */
     public RegistryCreator(){
 
-        discountDataBase = new DiscountDataBase();
-        externalAccountingSystem = new ExternalAccountingSystem();
-        externalInventorySystem = new ExternalInventorySystem();
+        discountDataBase = DiscountDataBase.getDiscountDataBase();
+        externalAccountingSystem =  ExternalAccountingSystem.getExternalAccountingSystem();
+        externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
         cashRegister =  new CashRegister();
 
     } 

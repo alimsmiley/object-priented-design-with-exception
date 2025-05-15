@@ -17,7 +17,7 @@ public class ExternalInventorySystemTest {
 
     @BeforeAll
     static void setUpClass(){
-        exInventory = new ExternalInventorySystem(); 
+        exInventory = ExternalInventorySystem.getExternalInventorySystem(); 
     }
 
 

@@ -9,7 +9,17 @@ import se.kth.iv1350.amazingpos.placeholders.PlaceholderDatabase;
  * Interacts with an external database that handles customer discounts.
  */
 public class DiscountDataBase {
+    private static final DiscountDataBase DISCOUNT_DATABASE = new DiscountDataBase();
     
+    public static DiscountDataBase getDiscountDataBase(){
+        return DISCOUNT_DATABASE; 
+    }
+
+    private DiscountDataBase(){  
+
+    } 
+
+
     /**
      * Sends customer and sale information to an external database that finds all discounts the customer is eligible for.
      * @param currentSale SaleDTO with all the sale information
