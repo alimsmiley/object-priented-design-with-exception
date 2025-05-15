@@ -10,7 +10,7 @@ import se.kth.iv1350.amazingpos.integration.ExternalAccountingSystem;
 public class CashRegister {
     
     private static final CashRegister CASH_REGISTER = new CashRegister(); 
-    private double balance = 0;
+    private double balance; 
 
     /**
      * Creates a new instance of cash register.

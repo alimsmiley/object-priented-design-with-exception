@@ -22,7 +22,7 @@ public class RegistryCreator {
         discountDataBase = DiscountDataBase.getDiscountDataBase();
         externalAccountingSystem =  ExternalAccountingSystem.getExternalAccountingSystem();
         externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
-        cashRegister =  new CashRegister();
+        cashRegister =  CashRegister.getCashRegister();
 
     } 
 
