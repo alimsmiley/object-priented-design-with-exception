@@ -23,6 +23,7 @@ public class Sale {
     private RegistryCreator externalSystems;
     private Printer printer;
     private Payment payment;
+    private DiscountStrategy discountComposite = new DiscountsComposite();
     
             
     /**
@@ -78,7 +79,9 @@ public class Sale {
      */
     public SaleDTO checkForDiscount(int customerID){ 
         SaleDTO currentSale = new SaleDTO(this);
-        DiscountDTO totalDiscount = externalSystems.getDiscountDataBase().searchForDiscount(currentSale, customerID);
+        // Replace with calculatediscount composite stratergy
+        //DiscountDTO totalDiscount = externalSystems.getDiscountDataBase().searchForDiscount(currentSale, customerID);
+        double totalDiscount = discountComposite.calculateDiscount(customerID, currentSale, externalSystems);
         applyDiscount(totalDiscount);
         SaleDTO updatedSale = new SaleDTO(this); 
 
@@ -127,13 +130,12 @@ public class Sale {
      * Applies the discount to the sales runningTotal.
      * @param totalDiscount The total percentage of discount the customer is eligible for.
      */
-    private void applyDiscount(DiscountDTO totalDiscount){
-        double appliedDiscount = calculateDiscount(totalDiscount);
+    private void applyDiscount(double totalDiscount){
         
-        double finalPriceAfterDiscount = this.runningTotal - this.runningTotal*appliedDiscount;
+        double finalPriceAfterDiscount = this.runningTotal - this.runningTotal*totalDiscount;
         this.runningTotal = finalPriceAfterDiscount;
 
-        double finalVATAfterDiscount = this.vat - this.vat*appliedDiscount;
+        double finalVATAfterDiscount = this.vat - this.vat*totalDiscount;
         this.vat = finalVATAfterDiscount;
 
     }

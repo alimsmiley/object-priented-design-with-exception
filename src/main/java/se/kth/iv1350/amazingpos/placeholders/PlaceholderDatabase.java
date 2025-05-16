@@ -31,7 +31,7 @@ public class PlaceholderDatabase {
 
     public static DiscountDTO findDiscountPlaceHolderDatabase(SaleDTO currentSale, int customerID){
         DiscountDTO[] discounts = {new DiscountDTO(0.10, 0, 0.05),
-             new DiscountDTO(0, 0, 0)};
+            new DiscountDTO(0, 0, 0)};
         
         if(customerID == 123){
             return discounts[0];
