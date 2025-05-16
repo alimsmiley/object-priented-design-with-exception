@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
-import se.kth.iv1350.amazingpos.model.InvalidItemException; 
-import se.kth.iv1350.amazingpos.model.Sale;
-import se.kth.iv1350.amazingpos.model.SaleDTO;
+
+import se.kth.iv1350.amazingpos.model.*;
 
 
 public class ControllerTest {
@@ -34,6 +33,8 @@ public class ControllerTest {
     private int validItemIdentifier3 = 3;
 
     private int  quantityX = 1;
+
+    private PaymentStrategy paymentType = new CashPayment();
    
 
     @BeforeEach
@@ -157,7 +158,7 @@ public class ControllerTest {
 
         }
 
-        double result = controller.pay(paidAmountExact);
+        double result = controller.pay(paidAmountExact, paymentType);
         double expected = 0;
 
         assertEquals(expected, result, "Change amount doesnt match!");
@@ -175,7 +176,7 @@ public class ControllerTest {
             
         }
 
-        double result = controller.pay(paidAmountMore);
+        double result = controller.pay(paidAmountMore, paymentType);
         double expected = 385;
 
         assertEquals(expected, result, "Change amount doesnt match!");

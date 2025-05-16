@@ -4,11 +4,9 @@ import se.kth.iv1350.amazingpos.integration.DataBaseException;
 import se.kth.iv1350.amazingpos.integration.Printer;
 import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.logapi.FileLogger;
-import se.kth.iv1350.amazingpos.model.InvalidItemException;
-import se.kth.iv1350.amazingpos.model.SaleObserver;
-import se.kth.iv1350.amazingpos.model.Payment;
-import se.kth.iv1350.amazingpos.model.Sale;
-import se.kth.iv1350.amazingpos.model.SaleDTO;
+
+import se.kth.iv1350.amazingpos.model.*;
+
 import se.kth.iv1350.amazingpos.view.TotalRevenueFileOutput;
 import java.util.*;
  
@@ -19,6 +17,7 @@ import java.util.*;
  * 
  */
 public class Controller {
+    
     private List<SaleObserver> saleObservers = 
                                 new ArrayList<>();
     private FileLogger logger;
@@ -136,8 +135,8 @@ public class Controller {
      * @param paidAmount    The amount paid for the sale.
      * @return  The change to be given back.
      */
-    public double pay(double paidAmount){
-        Payment payment = new Payment(paidAmount);
+    public double pay(double paidAmount, PaymentStrategy paymentType){
+        Payment payment = new Payment(paidAmount, paymentType);
         double change = sale.pay(payment);
         sale.printReceipt();
 

@@ -3,9 +3,8 @@ package se.kth.iv1350.amazingpos.view;
 
 import se.kth.iv1350.amazingpos.controller.Controller;
 import se.kth.iv1350.amazingpos.integration.DataBaseException;
-import se.kth.iv1350.amazingpos.model.InvalidItemException;
-import se.kth.iv1350.amazingpos.model.ItemDTO;
-import se.kth.iv1350.amazingpos.model.SaleDTO;
+
+import se.kth.iv1350.amazingpos.model.*;
 
 
 /**
@@ -15,6 +14,7 @@ import se.kth.iv1350.amazingpos.model.SaleDTO;
  * 
  */
 public class View {
+    private PaymentStrategy paymentType;
     private Controller contr;
 
 
@@ -71,9 +71,17 @@ public class View {
          
         double amountToPay = contr.concludeSale();
         System.out.println("Amount to pay: " +  amountToPay);
-       
         
-        double change = contr.pay(paidAmount);
+        int paymentChoice = 1;
+        if(paymentChoice == 1){
+             paymentType = new CashPayment();
+        } else {
+            paymentType = new CreditCardPayment();
+            paidAmount = amountToPay;
+        }
+       
+
+        double change = contr.pay(paidAmount, paymentType);
         System.out.println("--------------End of receipt-------------------"); 
 
         System.out.println(""); System.out.println(""); System.out.println(""); 

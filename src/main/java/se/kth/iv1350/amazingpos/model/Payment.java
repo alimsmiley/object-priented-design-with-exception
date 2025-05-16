@@ -6,6 +6,7 @@ package se.kth.iv1350.amazingpos.model;
  * Represents a payment made for a single specific sale.
  */
 public class Payment {
+    private PaymentStrategy paymentType;
     private double paidAmount;
     private double change;
 
@@ -13,8 +14,9 @@ public class Payment {
      * Creates a new instance of payment.
      * @param paidAmount    The amount that has been paid.
      */
-    public Payment(double paidAmount){
+    public Payment(double paidAmount, PaymentStrategy paymentType){
         this.paidAmount = paidAmount;
+        this.paymentType = paymentType;
         
     }
 
