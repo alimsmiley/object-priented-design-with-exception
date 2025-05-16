@@ -4,7 +4,6 @@ import se.kth.iv1350.amazingpos.logapi.FileLogger;
 import se.kth.iv1350.amazingpos.model.Sale;
 import se.kth.iv1350.amazingpos.model.SaleObserver;
 
-import java.lang.*; 
 
 
 /**

@@ -18,9 +18,6 @@ public class View {
     private Controller contr;
 
 
-    private int validItemIdentifier1 = 1;
-    private int validItemIdentifier2 = 2;
-    private int validItemIdentifier3 = 3;
     private int  quantity = 1;
 
     private double paidAmount = 1000;
