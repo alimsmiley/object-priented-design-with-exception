@@ -1,5 +1,4 @@
 package se.kth.iv1350.amazingpos.integration;
-import java.lang.*;
 
 /**
  * Contains exception regarding the database error

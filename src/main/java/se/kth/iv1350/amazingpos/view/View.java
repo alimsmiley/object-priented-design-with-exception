@@ -74,7 +74,7 @@ public class View {
         
         int paymentChoice = 1;
         if(paymentChoice == 1){
-             paymentType = new CashPayment();
+            paymentType = new CashPayment();
         } else {
             paymentType = new CreditCardPayment();
             paidAmount = amountToPay;

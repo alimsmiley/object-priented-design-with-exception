@@ -1,6 +1,5 @@
 package se.kth.iv1350.amazingpos.model;
 
-import java.lang.*;
 /**
  * Contains invalid item exception handling 
  */

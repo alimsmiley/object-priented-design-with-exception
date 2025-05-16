@@ -6,8 +6,6 @@ import se.kth.iv1350.amazingpos.integration.RegistryCreator;
 import se.kth.iv1350.amazingpos.logapi.FileLogger;
 
 import se.kth.iv1350.amazingpos.model.*;
-
-import se.kth.iv1350.amazingpos.view.TotalRevenueFileOutput;
 import java.util.*;
  
 

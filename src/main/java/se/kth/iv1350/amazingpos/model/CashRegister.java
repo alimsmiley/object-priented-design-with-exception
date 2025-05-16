@@ -1,8 +1,6 @@
 
 package se.kth.iv1350.amazingpos.model;
 
-import se.kth.iv1350.amazingpos.integration.ExternalAccountingSystem;
-
 /**
  *  Represents the cash register.
  * 
