@@ -44,7 +44,7 @@ public class View {
 
         SaleDTO currentSale;
         try {
-            for(int i = 1; i <= 4; i++){
+            for(int i = 0; i <= 4; i++){
                 currentSale =  contr.addItem(i, quantity);
                 ItemDTO currentItem =  currentSale.getLastRegisteredItem();
                 System.out.println("Item ID: " + i);

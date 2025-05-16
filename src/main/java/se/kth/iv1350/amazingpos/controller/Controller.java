@@ -74,7 +74,7 @@ public class Controller {
         try {
             isQuantityReasonable(quantity);
         } catch (InvalidItemException invalidQuantity){
-            logger.log(invalidQuantity.getMessage());
+            logger.log(invalidQuantity.getMessage() + "Invalid quantity");
             throw invalidQuantity;
         }
         catch(Exception javaException){
@@ -94,7 +94,7 @@ public class Controller {
             currentSale.checkItemValidity(); 
         }
         catch(InvalidItemException error){
-            logger.log(error.getMessage());
+            logger.log(error.getMessage() + " Invalid item id");
             throw error;         
         }
         catch(Exception javaException){
