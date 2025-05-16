@@ -7,7 +7,7 @@ public class DiscountsComposite implements DiscountStrategy{
     double totalDiscount;
     private List<DiscountStrategy> strategyList = new ArrayList<>();
 
-    void addDiscountStratergies(DiscountStrategy discountType){
+    void addDiscountStrategies(DiscountStrategy discountType){
         this.strategyList.add(discountType);
     }
 

@@ -116,7 +116,7 @@ public class SaleTest {
         double result = currentSale.getRunningTotal();
 
         double expectedResult =  345 - 345*0.15;
-        assertEquals(result, expectedResult, "Customer eligible for discount didnt get discount!");        
+        assertEquals(expectedResult, result, "Customer eligible for discount didnt get discount!");        
 
     }
 
