@@ -141,16 +141,6 @@ public class Sale {
     }
 
     /**
-     * Calculates the total percentage of the accumalated discounts.
-     * @param totalDiscount The discounts the customer is eligable for.
-     * @return  The total discount for entire purchase.
-     */
-    private double calculateDiscount(DiscountDTO totalDiscount){
-        double calculatedDiscount = totalDiscount.getItemDiscount() + totalDiscount.getCustomerDiscount() + totalDiscount.getTotalCostDiscount();
-        return calculatedDiscount;
-    }
-
-    /**
      * Adds a specified quantity of an item to the ShoppingCart.
      * @param item Item to be added to the ShoppingCart.
      * @param quantity The quantity of said item to be added.
