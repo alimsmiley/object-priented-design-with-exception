@@ -155,6 +155,81 @@ Then no `throws IOException` needed.
 | **Checked** (`Exception`)          | Yes (if not caught)    | Yes            |
 | **Unchecked** (`RuntimeException`) | No                     | Yes            |
 
-=================================================================================================
+=========================================The strategy pattern ===================================================
+Is the strategy patttern used in java what we see in some apps or websites when trying to use a filter to look for something
 
+Yes, the **Strategy pattern** is *often* used behind the scenes in Java applications (and other languages) to implement flexible **filtering systems**—like the kind you see in apps or websites when you're searching or narrowing down results.
 
+---
+
+### 🔍 Quick Recap: What is the Strategy Pattern?
+
+The **Strategy pattern** allows you to define a family of algorithms (strategies), put each one in a separate class, and make them interchangeable at runtime. This helps you follow the **Open/Closed Principle** (open for extension, closed for modification).
+
+---
+
+### ✅ In the Context of Filters (like on e-commerce or job sites)
+
+Let’s say you're on a shopping website, and you can filter by:
+
+* Price (e.g., Low to High)
+* Brand (e.g., Nike, Adidas)
+* Rating
+* Category
+
+Each of these can be implemented as a **strategy**:
+
+```java
+// The Strategy Interface
+public interface FilterStrategy {
+    boolean apply(Product product);
+}
+
+// Concrete Strategies
+public class PriceFilter implements FilterStrategy {
+    private double maxPrice;
+    public PriceFilter(double maxPrice) { this.maxPrice = maxPrice; }
+
+    @Override
+    public boolean apply(Product product) {
+        return product.getPrice() <= maxPrice;
+    }
+}
+
+public class BrandFilter implements FilterStrategy {
+    private String brand;
+    public BrandFilter(String brand) { this.brand = brand; }
+
+    @Override
+    public boolean apply(Product product) {
+        return product.getBrand().equalsIgnoreCase(brand);
+    }
+}
+```
+
+You can then **combine these strategies dynamically** based on user input:
+
+```java
+List<FilterStrategy> strategies = new ArrayList<>();
+strategies.add(new PriceFilter(100.0));
+strategies.add(new BrandFilter("Nike"));
+
+List<Product> filtered = products.stream()
+    .filter(p -> strategies.stream().allMatch(s -> s.apply(p)))
+    .collect(Collectors.toList());
+```
+
+---
+
+### 🧠 Why Use the Strategy Pattern for Filters?
+
+* **Dynamic behavior**: Filters can be added or changed at runtime.
+* **Cleaner code**: Each filter is encapsulated and testable.
+* **Extensibility**: Adding a new filter doesn’t require modifying existing code.
+
+---
+
+### TL;DR
+
+Yes, the **Strategy pattern is commonly used** in filtering systems like those you see in apps and websites. It provides a clean way to implement and manage flexible, user-driven search/filter behavior.
+====================================================================================================
