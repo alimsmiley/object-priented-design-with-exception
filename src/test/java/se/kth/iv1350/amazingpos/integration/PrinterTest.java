@@ -5,7 +5,9 @@ package se.kth.iv1350.amazingpos.integration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import se.kth.iv1350.amazingpos.model.CashPayment;
 import se.kth.iv1350.amazingpos.model.Payment;
+import se.kth.iv1350.amazingpos.model.PaymentStrategy;
 import se.kth.iv1350.amazingpos.model.Receipt;
 import se.kth.iv1350.amazingpos.model.Sale;
 
@@ -19,6 +21,7 @@ public class PrinterTest {
     private int quantity = 1;
     private double paidAmountMore = 1150;
     private double paidAmountExact = 765;
+    private PaymentStrategy paymentType = new CashPayment();
 
     private Payment payment; 
 
@@ -33,7 +36,7 @@ public class PrinterTest {
         testSale.registerItem(validItemIdentifier2, quantity*2);
         testSale.registerItem(validItemIdentifier3, quantity*3);
         testSale.endSale();
-        payment = new Payment(paidAmountMore);
+        payment = new Payment(paidAmountMore, paymentType);
         testSale.pay(payment);
         receipt = new Receipt(testSale);
     

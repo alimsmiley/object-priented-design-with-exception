@@ -35,7 +35,7 @@ public class SaleTest {
     double paid = 1000;
     double change;
 
-
+    private PaymentStrategy paymentType = new CashPayment();
     
     @BeforeEach 
     void setUp(){
@@ -154,7 +154,7 @@ public class SaleTest {
     void testPayTooMuch(){
         testSale.registerItem(validItemIdentifier, quantity);
         testSale.endSale();
-        payment = new Payment(paidAmountMore);
+        payment = new Payment(paidAmountMore, paymentType);
         double result = testSale.pay(payment);
         double expectedResult = 80;
 
@@ -165,7 +165,7 @@ public class SaleTest {
     void testPayExact(){
         testSale.registerItem(validItemIdentifier, quantity);
         testSale.endSale();
-        payment = new Payment(paidAmountExact);
+        payment = new Payment(paidAmountExact, paymentType);
         double result = testSale.pay(payment);
         double expectedResult = 0;
 
@@ -179,7 +179,7 @@ public class SaleTest {
     void testPrintReceipt() {
         testSale.registerItem(validItemIdentifier, quantity);
         testSale.endSale();
-        payment = new Payment(paidAmountExact);
+        payment = new Payment(paidAmountExact, paymentType);
         testSale.pay(payment);
         testSale.printReceipt();
 

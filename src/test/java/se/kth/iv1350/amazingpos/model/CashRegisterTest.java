@@ -20,6 +20,7 @@ public class CashRegisterTest {
     private double paidAmountMore = 425;
     private double paidAmountExact = 345;
     private Payment payment;
+    private PaymentStrategy paymentType = new CashPayment();
 
     
     @BeforeEach
@@ -29,7 +30,7 @@ public class CashRegisterTest {
         testSale = new Sale(exSystems, printer);
         testSale.registerItem(validItemIdentifier, quantity);
         testSale.endSale();
-        payment = new Payment(paidAmountMore);
+        payment = new Payment(paidAmountMore, paymentType);
         payment.calculateChange(testSale);
     }
 

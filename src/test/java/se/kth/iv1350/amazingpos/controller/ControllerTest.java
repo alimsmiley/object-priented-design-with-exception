@@ -35,6 +35,8 @@ public class ControllerTest {
     private int  quantityX = 1;
 
     private PaymentStrategy paymentType = new CashPayment();
+    private PaymentStrategy paymentTypeCreditCard = new CreditCardPayment();
+    
    
 
     @BeforeEach
@@ -218,4 +220,23 @@ public class ControllerTest {
         String expectedResult = "itemNotValid";
         assertEquals(message, expectedResult,"Exception Message Is incorrect");    
     }
+
+    @Test
+    void testCreditCardPaymentReturnsZero(){
+        try{
+            controller.addItem(validItemIdentifier1, quantityX);
+            controller.addItem(validItemIdentifier2, quantityX*2); 
+            controller.addItem(validItemIdentifier3, quantityX*3); 
+            controller.concludeSale();
+        }catch(InvalidItemException error){
+
+        }
+
+        double result = controller.pay(paidAmountExact, paymentTypeCreditCard);
+        double expected = 0;
+
+        assertEquals(expected, result, "Change amount doesnt match!");
+
+    }
 }
+

@@ -20,6 +20,7 @@ public class PaymentTest {
     private int quantity = 2;
     private double paidAmountMore = 425;
     private double paidAmountExact = 345;
+    private PaymentStrategy paymentType = new CashPayment();
 
 
     @BeforeEach
@@ -41,7 +42,7 @@ public class PaymentTest {
 
     @Test
     void testCalculateChangeReturnsValidChange() {
-        Payment payment = new Payment(paidAmountMore);
+        Payment payment = new Payment(paidAmountMore, paymentType);
         payment.calculateChange(testSale);
         double result = payment.getChange();
 
@@ -50,7 +51,7 @@ public class PaymentTest {
     }
     @Test
     void testCalculateChangeReturnsNoChange() {
-        Payment payment = new Payment(paidAmountExact);
+        Payment payment = new Payment(paidAmountExact, paymentType);
         payment.calculateChange(testSale);
         double result = payment.getChange();
 
