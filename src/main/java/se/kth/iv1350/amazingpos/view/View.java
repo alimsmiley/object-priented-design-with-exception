@@ -68,6 +68,9 @@ public class View {
                 System.out.println(error.getMessage()); 
             }
             catch (DataBaseException error){
+                System.out.println(error.getMessage());
+            }
+            catch (Exception error){
                 System.out.println("Couldn't register item, please try again");
             }
         }
