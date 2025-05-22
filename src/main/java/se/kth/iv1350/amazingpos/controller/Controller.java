@@ -78,8 +78,8 @@ public class Controller {
             throw invalidQuantity;
         }
         catch(Exception javaException){
-            System.out.println("Couldn't register item, please try again");
             logger.log(javaException.getMessage());
+            throw javaException;
         }
 
         SaleDTO currentSale;
