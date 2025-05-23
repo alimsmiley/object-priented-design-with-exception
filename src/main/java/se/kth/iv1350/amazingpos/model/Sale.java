@@ -23,7 +23,7 @@ public class Sale {
     private RegistryCreator externalSystems;
     private Printer printer;
     private Payment payment;
-    private DiscountsComposite discountComposite = new DiscountsComposite();
+    private DiscountsComposite discountComposite;
     
             
     /**
@@ -81,13 +81,7 @@ public class Sale {
         SaleDTO currentSale = new SaleDTO(this);
         // Replace with calculatediscount composite stratergy
         //DiscountDTO totalDiscount = externalSystems.getDiscountDataBase().searchForDiscount(currentSale, customerID);
-        DiscountStrategy customerIDDiscount = new CustomerIDDiscount();
-        DiscountStrategy itemDiscount = new ItemDiscount();
-        DiscountStrategy totalCostDiscount = new TotalCostDiscount();
-
-        discountComposite.addDiscountStrategies(customerIDDiscount);
-        discountComposite.addDiscountStrategies(itemDiscount);
-        discountComposite.addDiscountStrategies(totalCostDiscount);
+        
 
         double totalDiscount = discountComposite.calculateDiscount(customerID, currentSale, externalSystems);
         applyDiscount(totalDiscount);
@@ -225,6 +219,9 @@ public class Sale {
         return payment;
     }
 
+    public void setDiscountsComposite(DiscountsComposite discountComposite){
+        this.discountComposite = discountComposite;
+    }
 }
 
 

@@ -13,7 +13,7 @@ public class DiscountsComposite implements DiscountStrategy{
      * Adds the defined discount types
      * @param discountType  The discount type to be added.
      */
-    void addDiscountStrategies(DiscountStrategy discountType){
+    public void addDiscountStrategies(DiscountStrategy discountType){
         this.strategyList.add(discountType);
     }
 

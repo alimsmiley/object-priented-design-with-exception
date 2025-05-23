@@ -22,6 +22,7 @@ public class Controller {
     private Sale sale;
     private RegistryCreator externalSystems;
     private Printer printer;
+    private DiscountsComposite discountComposite; 
 
     public static final int MAX_ALLOWED_QUANTITY = 1000;
 
@@ -33,6 +34,16 @@ public class Controller {
     public Controller(RegistryCreator creator, Printer printer){
        this.externalSystems = creator;
        this.printer = printer;  
+
+        DiscountStrategy customerIDDiscount = new CustomerIDDiscount();
+        DiscountStrategy itemDiscount = new ItemDiscount();
+        DiscountStrategy totalCostDiscount = new TotalCostDiscount();
+
+        discountComposite = new DiscountsComposite(); 
+
+        discountComposite.addDiscountStrategies(customerIDDiscount);
+        discountComposite.addDiscountStrategies(itemDiscount);
+        discountComposite.addDiscountStrategies(totalCostDiscount);
        
     }
 
@@ -112,8 +123,10 @@ public class Controller {
      *         if not eligible, the runningTotal remains unchanged.
      */
     public SaleDTO signalDiscount(int customerID){
+        
+        sale.setDiscountsComposite(discountComposite);
         SaleDTO currentSale = sale.checkForDiscount(customerID);
-
+        
         return currentSale;
     }
 

@@ -30,6 +30,8 @@ public class SaleTest {
     private double paidAmountMore = 425;
     private double paidAmountExact = 345;
     private Payment payment;
+    private DiscountsComposite discountComposite;
+    
 
 
     double paid = 1000;
@@ -42,6 +44,18 @@ public class SaleTest {
         exSystems = new RegistryCreator();
         printer = new Printer();
         testSale = new Sale(exSystems, printer);
+
+        DiscountStrategy customerIDDiscount = new CustomerIDDiscount();
+        DiscountStrategy itemDiscount = new ItemDiscount();
+        DiscountStrategy totalCostDiscount = new TotalCostDiscount();
+
+        discountComposite = new DiscountsComposite(); 
+
+        discountComposite.addDiscountStrategies(customerIDDiscount);
+        discountComposite.addDiscountStrategies(itemDiscount);
+        discountComposite.addDiscountStrategies(totalCostDiscount);
+
+        testSale.setDiscountsComposite(discountComposite);
 
     }
      
